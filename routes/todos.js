@@ -9,5 +9,7 @@ router.post('/new-todo', (req, res) => TodoController.createTodo(req, res));
 router.get('/', (req, res) => TodoController.getTodos(req, res));
 // Update todo
 router.patch('/:id', (req, res) => TodoController.updateTodo(req, res));
+// Delete todo
+router.delete('/:id', (req, res) => TodoController.deleteTodo(req, res));
 
 export default router;

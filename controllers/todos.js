@@ -30,10 +30,10 @@ class todoController {
 
         // If index is not found (returns -1) then throw error
         if (todoIndex < 0) {
-            throw new Error('Could not find todo');
             res.json({
                 message: 'Could not find todo with such index'
             });
+            throw new Error('Could not find todo');
         }
 
         // Overwrite todo where index matched (id stays the same, task is updated)
@@ -42,6 +42,26 @@ class todoController {
         res.json({
             message: 'Updated todo',
             updatedTask: this.TODOS[todoIndex]
+        })
+    }
+
+    deleteTodo(req, res) {
+        const todoId = req.params.id;
+        // Find index from TODO[]
+        const todoIndex = this.TODOS.findIndex(todo => todo.id === todoId);
+
+        // If index is not found (returns -1) then throw error
+        if (todoIndex < 0) {
+            res.json({
+                message: 'Could not find todo with such index'
+            });
+            throw new Error('Could not find todo');
+        }
+
+        this.TODOS.splice(todoIndex, 1);
+
+        res.json({
+            message: 'Deleted todo'
         })
     }
 }
