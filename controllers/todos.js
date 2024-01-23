@@ -21,6 +21,29 @@ class todoController {
     getTodos(req, res) {
         res.json({ tasks: this.TODOS });
     }
+
+    updateTodo(req, res) {
+        const todoId = req.params.id;
+        const updatedTask = req.body.task;
+        // Finds index from TODOS [] where todo ids match
+        const todoIndex = this.TODOS.findIndex(todo => todo.id === todoId);
+
+        // If index is not found (returns -1) then throw error
+        if (todoIndex < 0) {
+            throw new Error('Could not find todo');
+            res.json({
+                message: 'Could not find todo with such index'
+            });
+        }
+
+        // Overwrite todo where index matched (id stays the same, task is updated)
+        this.TODOS[todoIndex] = new Todo(this.TODOS[todoIndex].id, updatedTask);
+
+        res.json({
+            message: 'Updated todo',
+            updatedTask: this.TODOS[todoIndex]
+        })
+    }
 }
 
 export const TodoController = new todoController();
